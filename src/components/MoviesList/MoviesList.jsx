@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import css from './MoviesList.module.css';
 import LinesEllipsis from 'react-lines-ellipsis';
-
 const MoviesList = ({ films }) => {
   const location = useLocation();
   return (
@@ -14,7 +13,7 @@ const MoviesList = ({ films }) => {
               src={
                 poster_path
                   ? `http://image.tmdb.org/t/p/w154${poster_path}`
-                  : 'https://www.braasco.com//ASSETS/IMAGES/ITEMS/ZOOM/no_image.jpeg'
+                  : PLACEHOLDER + '?text=' + title
               }
               alt={title}
               width="154"

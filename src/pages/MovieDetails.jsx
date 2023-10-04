@@ -50,7 +50,7 @@ const MovieDetails = () => {
               src={
                 poster_path
                   ? `http://image.tmdb.org/t/p/w342${poster_path}`
-                  : 'https://www.braasco.com//ASSETS/IMAGES/ITEMS/ZOOM/no_image.jpeg'
+                  : PLACEHOLDER + '?text=' + title
               }
               alt={title}
               width="200"

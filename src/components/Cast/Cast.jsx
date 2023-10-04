@@ -7,23 +7,22 @@ import { fetchMovieCast, onFetchError } from 'services/api';
 const endPoint = '/movie';
 
 const Cast = () => {
-    const { movieId } = useParams();
-    const [loading, setLoading] = useState(true);
-    const [cast, setCast] = useState([]);
+  const { movieId } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [cast, setCast] = useState([]);
 
-    useEffect(() => {
-        if (!movieId) {
-            return;
-        }
-        fetchMovieCast(endPoint, movieId)
-            .then(data => {
-                setCast(data.cast);
-            })
-            .catch(onFetchError)
-            .finally(() => setLoading(false));
-    }, [movieId]);
+  useEffect(() => {
+    if (!movieId) {
+      return;
+    }
+    fetchMovieCast(endPoint, movieId)
+      .then(data => {
+        setCast(data.cast);
+      })
+      .catch(onFetchError)
+      .finally(() => setLoading(false));
+  }, [movieId]);
 
-    
   return (
     <>
       <h3>Cast:</h3>
@@ -38,11 +37,9 @@ const Cast = () => {
                 src={
                   profile_path
                     ? `http://image.tmdb.org/t/p/w185${profile_path}`
-                    : 'https://www.braasco.com//ASSETS/IMAGES/ITEMS/ZOOM/no_image.jpeg'
+                    : PLACEHOLDERINFO + '?text= ' + name
                 }
                 alt={name}
-                width="100"
-                height="150"
               />
             </li>
           ))}
