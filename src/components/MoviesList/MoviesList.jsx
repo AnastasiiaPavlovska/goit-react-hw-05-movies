@@ -1,37 +1,22 @@
-import { Link, useLocation } from 'react-router-dom';
-import css from './MoviesList.module.css';
-import LinesEllipsis from 'react-lines-ellipsis';
-const MoviesList = ({ films }) => {
+import { Link,useLocation } from 'react-router-dom';
+import {List,Item,Title} from './MoviesList.styled';
+
+export const MoviesList = ({movies}) => {
+
   const location = useLocation();
   return (
-    <ul className={css.moviesList}>
-      {films.map(({ id, title, overview, poster_path }) => (
-        <li className={css.moviesLink} key={id}>
-          <Link to={`/movies/${id}`} state={{ from: location }}>
-            <img
-              className={css.imgItem}
-              src={
-                poster_path
-                  ? `http://image.tmdb.org/t/p/w154${poster_path}`
-                  : PLACEHOLDER + '?text=' + title
-              }
-              alt={title}
-              width="154"
-              height="231"
-            />
-            <div className={css.cardWrap}>
-              <h3>{title}</h3>
-              <LinesEllipsis
-                text={overview}
-                maxLine="4"
-                ellipsis="..."
-              ></LinesEllipsis>
-            </div>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-};
 
-export default MoviesList;
+    <List>
+      {movies.map(({id,title,name,poster_path}) => (
+        <Item key={id}>
+          <Link to={`/movies/${id}`} state={{from:location}}>
+            <img src={`https://image.tmdb.org/t/p/w200${poster_path}`} alt={title?title:name} width='200'/>
+            <Title>{title?title:name}</Title>
+          </Link>
+        </Item>
+      ))}
+    </List>
+
+  )
+
+}

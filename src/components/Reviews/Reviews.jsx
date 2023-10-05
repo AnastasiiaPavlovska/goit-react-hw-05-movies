@@ -1,49 +1,44 @@
-import { Loader } from 'components/Loader/Loader';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import css from './Reviews.module.css';
-import { fetchMovieReviews, onFetchError } from 'services/api';
-
-const endPoint = '/movie';
+import { getReviewsById } from '../../services/theMoiveApi';
+import {List,Item,Title} from './Reviews.styled';
 
 const Reviews = () => {
-    const { movieId } = useParams();
-    const [loading, setLoading] = useState(true);
-    const [reviews, setReviews] = useState([]);
+  const { movieId } = useParams();
 
-    useEffect(() => {
-        if (!movieId) {
-            return;
-        }
+  const [reviews, setReviews] = useState({});
 
-        fetchMovieReviews(endPoint, movieId)
-          .then(data => {
-              setReviews(data.results);
-          })
-          .catch(onFetchError)
-          .finally(() => setLoading(false));
-    }, [movieId]);
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const reviewsData = await getReviewsById(movieId);
+        setReviews(reviewsData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
 
-    return (
-      <>
-          <h3>Reviews:</h3>
-          {loading && <Loader />}
-          {reviews.length !== 0 ? (
-            <ul className={css.reviewsList}>
-                {reviews.map(({ id, author, content }) => (
-                  <li className={css.reviewsLink} key={id}>
-                      <p>
-                          <b>Author:</b> {author}
-                      </p>
-                      <p>{content}</p>
-                  </li>
-                ))}
-            </ul>
-          ) : (
-            <p>Вибачте! У нас немає рецензій на цей фільм</p>
-          )}
-      </>
-    );
+    fetchReviews();
+  }, [movieId]);
+
+  const { results } = reviews;
+
+  return (
+    <div>
+      {results ? (
+        <List>
+          {results.map(({ author, id, content }) => (
+            <Item key={id}>
+              <Title>Author: {author}</Title>
+              <p>{content}</p>
+            </Item>
+          ))}
+        </List>
+      ) : (
+        <p>We don't have any reviews for this movie</p>
+      )}
+    </div>
+  );
 };
 
 export default Reviews;

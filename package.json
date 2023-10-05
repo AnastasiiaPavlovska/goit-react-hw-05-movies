@@ -4,17 +4,19 @@
   "private": true,
   "homepage": "https://anastasiiapavlovska.github.io/goit-react-hw-05-movies/",
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.3.4",
+    "lodash.throttle": "^4.1.1",
+    "notiflix": "^3.2.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-lines-ellipsis": "^0.15.3",
+    "react-icons": "^4.11.0",
     "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
-    "react-toastify": "^9.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

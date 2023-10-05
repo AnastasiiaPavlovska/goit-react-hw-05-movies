@@ -1,53 +1,45 @@
-import { Loader } from 'components/Loader/Loader';
+import { getCastById } from '../../services/theMoiveApi';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import css from './Cast.module.css';
-import { fetchMovieCast, onFetchError } from 'services/api';
-
-const endPoint = '/movie';
-
+import {List,Item,Title,SubTitle,Placeholder} from './Cast.styled';
 const Cast = () => {
   const { movieId } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [cast, setCast] = useState([]);
+  const [casts, setCasts] = useState({});
 
   useEffect(() => {
-    if (!movieId) {
-      return;
-    }
-    fetchMovieCast(endPoint, movieId)
-      .then(data => {
-        setCast(data.cast);
-      })
-      .catch(onFetchError)
-      .finally(() => setLoading(false));
+    const fetchCasts = async () => {
+      try {
+        const castsData = await getCastById(movieId);
+        setCasts(castsData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    fetchCasts();
   }, [movieId]);
 
+  const {cast} = casts;
+
   return (
-    <>
-      <h3>Cast:</h3>
-      {loading && <Loader />}
-      {cast.length !== 0 ? (
-        <ul className={css.castList}>
+    <div>
+      {cast ? (
+        <List>
           {cast.map(({ id, name, character, profile_path }) => (
-            <li className={css.castLink} key={id}>
-              <b>{name}</b>
-              <p>Character: {character}</p>
-              <img
-                src={
-                  profile_path
-                    ? `http://image.tmdb.org/t/p/w185${profile_path}`
-                    : PLACEHOLDERINFO + '?text= ' + name
-                }
-                alt={name}
-              />
-            </li>
+            <Item key={id}>
+              {profile_path ? ( <img
+                src={`https://image.tmdb.org/t/p/w200${profile_path}`}
+                alt={name} width='200'/>) :<Placeholder>Photo will be added soon...</Placeholder>}
+              <Title>{name}</Title>
+              <SubTitle>{character}</SubTitle>
+            </Item>
           ))}
-        </ul>
+        </List>
       ) : (
-        <p>Вибачте! У нас немає інформації про акторський склад</p>
+        <p>Loading cast information...</p>
       )}
-    </>
+    </div>
   );
 };
+
 export default Cast;
