@@ -54,28 +54,3 @@ const Home = () => {
 
 export default Home;
 
-// const fetchMovies = useCallback(async () => {
-
-//   try {
-
-//   const fetchedData = await getMovieTrends(currentPage);
-
-//     setTrendingMovies((prevState) => [...prevState,...fetchedData]);
-
-//      setCurrentPage(prev => prev+1)
-//   } catch (error) {
-//     console.log(error.message);
-//   } finally {
-
-//     setloading(false);
-//   }
-// },[currentPage]);
-
-// useEffect(() => {
-
-//     if(loading) {
-
-//       fetchMovies();
-//     }
-
-// },[loading,fetchMovies]);

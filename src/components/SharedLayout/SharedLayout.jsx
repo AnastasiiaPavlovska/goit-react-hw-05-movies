@@ -13,8 +13,11 @@ const SharedLayout = () => {
           <StyledNavLink to="/movies"><FcFilmReel size="22"/> Movies</StyledNavLink>
         </Nav>
       </Header>
-      <Outlet/>
-      <Suspense fallback={<div>Loading page...</div>}></Suspense>
+      <Outlet>
+        <Suspense fallback={<div>Loading page...</div>}></Suspense>
+      </Outlet>
+
+
     </div>
   );
 };
